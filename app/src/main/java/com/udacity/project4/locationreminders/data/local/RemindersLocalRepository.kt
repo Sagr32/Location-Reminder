@@ -18,6 +18,8 @@ class RemindersLocalRepository(
     private val remindersDao: RemindersDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ReminderDataSource {
+//TODO: add wrapEspressoIdlingResource as requested
+
 
     /**
      * Get the reminders list from the local db

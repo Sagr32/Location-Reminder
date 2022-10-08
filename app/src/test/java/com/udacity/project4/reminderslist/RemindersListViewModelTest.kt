@@ -84,6 +84,7 @@ class RemindersListViewModelTest {
         assertThat(viewModel.remindersList.getOrAwaitValue()).isNotEmpty()
     }
 
+    //TODO: Test error message as requested
     @Test
     fun loadReminderWhenTasksAreUnavailable_callErrorToDisplay() = runBlockingTest {
         fakeDataSource.setShouldReturnError(true)
