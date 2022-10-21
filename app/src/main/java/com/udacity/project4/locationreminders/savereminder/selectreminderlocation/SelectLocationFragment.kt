@@ -75,6 +75,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             Log.e("requestCode", "Location_On")
             checkDeviceLocationSettings(false)
         }
+
     }
 
     override fun onCreateView(
@@ -165,7 +166,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     private fun checkPermissions() {
         if (foregroundLocationPermissionApproved()) {
 //            checkDeviceLocationSettings()
-//            enableMyLocation()
+            enableMyLocation()
         } else {
             requestForegroundLocationPermissions()
         }
@@ -237,13 +238,12 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     private fun requestForegroundLocationPermissions() {
         val permissionsArray = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
-        val resultCode = REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
 
 
         Log.d(TAG, "Request foreground only location permission")
         requestPermissions(
             permissionsArray,
-            resultCode
+            REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
         )
     }
 
@@ -357,6 +357,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             return
         }
         Log.e("requestCode", "first")
+        enableMyLocation()
         //TODO: I have used current current location to avoid location being null as requested
         fusedLocationClient.getCurrentLocation(
             LocationRequest.PRIORITY_HIGH_ACCURACY,
