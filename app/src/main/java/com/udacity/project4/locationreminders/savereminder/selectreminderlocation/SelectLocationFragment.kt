@@ -1,7 +1,6 @@
 package com.udacity.project4.locationreminders.savereminder.selectreminderlocation
 
 
-//import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -62,10 +61,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentSelectLocationBinding
     private lateinit var pointOfInterest: PointOfInterest
 
-    override fun onStart() {
-        super.onStart()
-        checkPermissions()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -147,6 +142,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         mMap = p0
+        checkPermissions()
         setPoiClick(mMap)
         setMapStyle(mMap)
         setMapLongClick(mMap)
