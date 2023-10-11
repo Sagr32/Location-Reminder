@@ -1,9 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
+
 apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 
 
@@ -25,17 +27,18 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    packagingOptions {
+        resources {
+            pickFirsts += ['META-INF/AL2.0', 'META-INF/LGPL2.1']
+        }
     }
 
-    packagingOptions {
-        pickFirst 'META-INF/AL2.0'
-        pickFirst 'META-INF/LGPL2.1'
-    }
     testOptions.unitTests {
         includeAndroidResources = true
         returnDefaultValues = true
@@ -48,11 +51,10 @@ android {
     buildFeatures {
         dataBinding true
     }
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
+    namespace 'com.udacity.project4'
+    lint {
         abortOnError false
+        checkReleaseBuilds false
     }
 }
 
@@ -79,12 +81,15 @@ dependencies {
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 
     //Room dependencies
-    implementation "androidx.room:room-ktx:$roomVersion"
-    implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
+    def room_version = "2.5.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 
     //Coroutines Dependencies
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 
 
     //Koin
@@ -113,6 +118,7 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     androidTestImplementation "androidx.test:rules:$androidXTestRulesVersion"
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
+    androidTestImplementation "androidx.room:room-ktx:$roomVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
     androidTestImplementation "org.robolectric:annotations:$robolectricVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
@@ -122,7 +128,7 @@ dependencies {
     //  androidTestImplementation "junit:junit:$junitVersion"
     // Once https://issuetracker.google.com/127986458 is fixed this can be testImplementation
     // not yet resolved, for now is ok debug implementation
-    debugImplementation "androidx.fragment:fragment-testing:1.2.5"
+    debugImplementation "androidx.fragment:fragment-testing:1.6.1"
     implementation "androidx.test:core:$androidXTestCoreVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
@@ -132,7 +138,7 @@ dependencies {
 
 
     //Maps & Geofencing
-    implementation "com.google.android.gms:play-services-location:20.0.0"
+    implementation "com.google.android.gms:play-services-location:21.0.1"
     implementation "com.google.android.gms:play-services-maps:18.1.0"
 
 // Import the Firebase BoM

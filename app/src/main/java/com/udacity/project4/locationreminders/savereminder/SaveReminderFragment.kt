@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.BuildConfig
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
